@@ -7,9 +7,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignInComponent implements OnInit {
 
-  constructor() { }
+  signinForm: FormGroup;
+
+  constructor(private service: UserService, private fb: FormBuilder) {
+    this.createForm();
+  }
 
   ngOnInit() {
+  }
+
+  createForm(): void {
+    this.signinForm = this.fb.group({
+      username: ['username', Validators.required],
+      password: ['password', Validators.required]
+    });
+  }
+
+  onSubmit(){
   }
 
 }
