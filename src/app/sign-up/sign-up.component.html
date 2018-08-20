@@ -1,3 +1,11 @@
-<p>
-  sign-up works!
-</p>
+<form [formGroup]= "signupForm">
+        <label>Username</label>
+        <input formControlName="Pseudo" type="text" [(ngModel)]="user.Pseudo"/>
+        <label>Email</label>
+        <input formControlName="Mail" type="text" [(ngModel)]="user.Mail"/>
+        <label>Password</label>
+        <input formControlName="Password"type="text" [(ngModel)]="user.Password"/>
+        <label>Verification Password</label>
+        <input formControlName="VerificationPassword"type="text" [(ngModel)]="pass"/>
+        <button (click)="onSubmit()" [disabled]="!signupForm.valid">Create</button>
+</form>
