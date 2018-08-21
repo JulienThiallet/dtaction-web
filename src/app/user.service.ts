@@ -19,7 +19,6 @@ export class UserService {
 
   addUser(user: User){
     this.users.push(user);
-    USERS.push(user);
   }
 
 }
