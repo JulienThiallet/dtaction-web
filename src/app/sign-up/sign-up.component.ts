@@ -49,7 +49,7 @@ export class SignUpComponent implements OnInit {
 
   onSubmit(){
     this.service.addUser(this.user);
-    this.service.getUser().subscribe(u => console.log(u));
+    this.service.getUsers().subscribe(u => console.log(u));
     this.user = new User();
   }
 
