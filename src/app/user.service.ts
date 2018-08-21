@@ -9,11 +9,21 @@ import { Observable, of } from 'rxjs';
 })
 export class UserService {
   users: Array<User>;
-    constructor() { 
-      this.users = USERS;
-    }
-  
-  getUser(): Observable<User[]>{
+  user: User;
+
+  constructor() {
+    this.users = USERS;
+  }
+
+  getUser(pseudo: string, password: string): Observable<User>{
+    var res = USERS.find( u => u.Pseudo === pseudo && u.Password === password);
+
+    this.user = res;
+
+    return of(this.user);
+  }
+
+  getUsers(): Observable<User[]>{
     return of(this.users);
   }
 

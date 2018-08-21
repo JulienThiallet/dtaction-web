@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +7,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  isVisible: boolean;
+
+  constructor() {
+    this.isVisible = false;
+  }
 
   ngOnInit() {
+  }
+
+  displayModal(){
+    this.isVisible = true;
+  }
+
+  closeModal(){
+    this.isVisible = false;
   }
 
 }
