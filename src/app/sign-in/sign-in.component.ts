@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { User } from '../user';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -11,14 +12,16 @@ import { UserService } from '../user.service';
 export class SignInComponent implements OnInit {
 
   user: User;
+  isValid: boolean;
 
   signinForm: FormGroup;
 
   @Output() close = new EventEmitter();
 
-  constructor(private service: UserService, private fb: FormBuilder) {
+  constructor(private service: UserService, private fb: FormBuilder, private router: Router) {
     this.createForm();
     this.user = new User();
+    this.isValid = false;
   }
 
   ngOnInit() {
@@ -32,7 +35,12 @@ export class SignInComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.service.getUser(this.user.Pseudo, this.user.Password));
+    this.service.getUser(this.user.Pseudo, this.user.Password).subscribe(u => (u != undefined && u.Pseudo !='') ? this.isValid = true : this.isValid = false);
+
+    if(this.isValid)
+    {
+      this.router.navigate(['/liste']);
+    }
   }
 
   onClose(){

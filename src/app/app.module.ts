@@ -7,9 +7,11 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { ListeComponent } from './liste/liste.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
+  {path: 'liste', component: ListeComponent}
 ]
 
 @NgModule({
@@ -17,7 +19,8 @@ const routes: Routes = [
     AppComponent,
     HomeComponent,
     SignUpComponent,
-    SignInComponent
+    SignInComponent,
+    ListeComponent
   ],
   imports: [
     BrowserModule,
