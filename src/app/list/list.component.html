@@ -1,0 +1,18 @@
+<h1>Ma Liste</h1>
+
+<ul>
+  <li *ngFor="let t of tasks" >
+    <app-task [task]="t"></app-task>
+    <button (click)="toggleUpdateInput(t)">Modify</button>
+    <div [style.display]="styleDisplayUpdate(t)" >
+      <input type="text" [(ngModel)]="newContent[t.Id]">
+      <button (click)="updateTask(t)">Update</button>
+    </div>
+    <button (click)="removeTask(t)">Delete</button>
+  </li>
+</ul>
+<button (click)="toggleAddInput()">Add a Task</button>
+<div [style.display]="styleDisplayAdd()">
+  <input type="text" [(ngModel)]="content">
+  <button (click)="addTask()">Ajouter</button>
+</div>
