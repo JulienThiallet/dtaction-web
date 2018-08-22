@@ -1,9 +1,13 @@
+<div>
 <button (click)="displayModal()" name="loginBtn">Login</button>
-
 <!-- The Modal -->
 <div  [style.display]="isVisible ? 'block' : 'none'" id="loginModal" class="modal">
-  <span (click)="closeModal()"
-class="close" title="Close Modal" name="closeModalBtn">×</span>
-  <app-sign-in (close)="closeModal()"></app-sign-in>
+    <span (click)="closeModal()"
+  class="close" title="Close Modal" name="closeModalBtn">×</span>
+    <app-sign-in (close)="closeModal()"></app-sign-in>  
+  </div>
 
+<button (click)="navigateSignUp()">Sign Up</button>
 </div>
+
+
