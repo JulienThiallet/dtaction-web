@@ -15,6 +15,14 @@ export class UserService {
     this.users = USERS;
   }
 
+  getUserByPseudo(pseudo: string): Observable<User>{
+    var res = USERS.find( u => u.Pseudo === pseudo);
+
+    this.user = res;
+
+    return of(this.user);
+  }
+
   getUser(pseudo: string, password: string): Observable<User>{
     var res = USERS.find( u => u.Pseudo === pseudo && u.Password === password);
 

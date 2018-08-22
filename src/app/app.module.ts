@@ -12,6 +12,7 @@ import { TaskComponent } from './task/task.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
+  {path: 'signup', component: SignUpComponent},
   {path: 'list', component: ListComponent}
 ]
 

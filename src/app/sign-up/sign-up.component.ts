@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../user';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
 import { UserService } from '../user.service';
 import { USERS } from '../mock-user';
 
@@ -17,51 +19,44 @@ export class SignUpComponent implements OnInit {
   flag: boolean;
   flagForm: boolean;
 
-  constructor(private service: UserService) {
+  userExist: boolean;
+
+  constructor(private service: UserService, private router: Router) {
     this.user = new User();
     this.flag = false;
    }
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() {}
 
   verifPass(){
-    console.log('pass ' +this.pass);
-    console.log(this.user.Password);
     if (this.pass !== this.user.Password)
     {
-      console.log("pas de concordance");
       this.flag = true;
     }
-    else 
+    else
     {
       this.flag = false;
     }
-    console.log("affiche "+this.flag);
   }
 
- /* verifForm(){
-    let b : boolean = !this.flag;
-    // on a deja les deux pass idem
+  isUserAlreadyExist(){
+    let alreadyExist: boolean;
+    this.service.getUserByPseudo(this.user.Pseudo).subscribe(u => (u != undefined && u.Pseudo !='') ? alreadyExist = true : alreadyExist = false);
 
-  }*/
+    alreadyExist ? this.userExist = true : this.userExist = false;
+  }
+
+  displayUserAlreadyExist(){
+    return this.userExist ? 'block' : 'none';
+  }
 
   onSubmit(){
-    this.service.addUser(this.user);
-    this.service.getUsers().subscribe(u => console.log(u));
-    this.user = new User();
+    if(!this.userExist){
+      this.userExist = false;
+      this.service.addUser(this.user);
+      this.user = new User();
+      this.router.navigate(['./list']);
+    }
   }
 
-  save(model: User, isValid: boolean) {
-    // call API to save customer
-    console.log(model, isValid);
-  }
-  debug(){
-    const es = this.signupForm.controls['Pseudo'].errors.forEach(e=>console.log(e));
-    /*array.forEach(element => {
-      console.log(element);
-    });;*/
-      console.log(" on focus ourt  :  " + es);
-  }
 }

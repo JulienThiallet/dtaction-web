@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Task } from '../task';
 import { TASKS } from '../mock-task';
 import { TaskService } from '../task.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-list',
@@ -19,7 +20,7 @@ export class ListComponent implements OnInit {
   newContent: Array<string>;
   content: string;
 
-  constructor(private service: TaskService) {
+  constructor(private service: TaskService, private serviceTest: UserService) {
     this.tasks = TASKS;
     this.canBeModified = new Array<boolean>();
     this.newContent = new Array<string>();
@@ -30,6 +31,7 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.serviceTest.getUsers());
   }
 
   removeTask(task: Task){

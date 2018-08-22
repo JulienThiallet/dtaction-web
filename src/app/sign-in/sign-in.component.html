@@ -10,7 +10,7 @@
     <label for="psw"><b>Password</b></label>
     <input formControlName="password" type="password" [(ngModel)]="user.Password" placeholder="Enter Password" name="password" required>
 
-    <button type="submit" (click)="onSubmit()">Login</button>
+    <button type="submit" (click)="onSubmit()"  (keyup.enter)="onSubmit()">Login</button>
     <label>
       <!-- <input type="checkbox" checked="checked" name="remember"> Remember me -->
     </label>
