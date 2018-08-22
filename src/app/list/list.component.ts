@@ -5,11 +5,11 @@ import { TASKS } from '../mock-task';
 import { TaskService } from '../task.service';
 
 @Component({
-  selector: 'app-liste',
-  templateUrl: './liste.component.html',
-  styleUrls: ['./liste.component.css']
+  selector: 'app-list',
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.css']
 })
-export class ListeComponent implements OnInit {
+export class ListComponent implements OnInit {
 
   tasks: Array<Task>;
   task: Task;

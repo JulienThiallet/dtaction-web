@@ -39,7 +39,7 @@ export class SignInComponent implements OnInit {
 
     if(this.isValid)
     {
-      this.router.navigate(['/liste']);
+      this.router.navigate(['/list']);
     }
   }
 

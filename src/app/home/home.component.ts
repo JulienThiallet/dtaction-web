@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
 
   navigateSignUp()
   {
-    this.router.navigate(['/liste']);
+    this.router.navigate(['/list']);
   }
 
 }
