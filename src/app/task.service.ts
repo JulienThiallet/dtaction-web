@@ -32,6 +32,10 @@ export class TaskService {
     this.tasks.push(task);
   }
 
+  updateTask(task: Task, content: string){
+    this.tasks[this.tasks.findIndex(e => e.Id === task.Id)].Content = content;
+  }
+
   removeTask(task: Task){
     this.tasks
       .splice
