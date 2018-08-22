@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,7 @@ export class HomeComponent implements OnInit {
 
   isVisible: boolean;
 
-  constructor() {
+  constructor(private router: Router) {
     this.isVisible = false;
   }
 
@@ -22,6 +23,11 @@ export class HomeComponent implements OnInit {
 
   closeModal(){
     this.isVisible = false;
+  }
+
+  navigateSignUp()
+  {
+    this.router.navigate(['/liste']);
   }
 
 }
