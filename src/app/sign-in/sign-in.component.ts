@@ -35,12 +35,18 @@ export class SignInComponent implements OnInit {
   }
 
   onSubmit(){
-    this.service.getUser(this.user.Pseudo, this.user.Password).subscribe(u => (u != undefined && u.Pseudo !='') ? this.isValid = true : this.isValid = false);
+    this.service.getUser(this.user.Pseudo, this.user.Password).subscribe(u => (u != undefined && u.Pseudo !='') ? this.validAndPutUserId(u.Id) : this.isValid = false);
 
     if(this.isValid)
     {
+      sessionStorage.setItem('Id', this.user.Id.toString());
       this.router.navigate(['/list']);
     }
+  }
+
+  validAndPutUserId(id: number){
+    this.user.Id = id;
+    this.isValid = true;
   }
 
   onClose(){

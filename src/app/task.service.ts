@@ -16,16 +16,12 @@ export class TaskService {
     this.tasks = TASKS;
   }
 
-  // getUser(pseudo: string, password: string): Observable<Task>{
-  //   var res = Task.find( u => u.Pseudo === pseudo && u.Password === password);
-
-  //   this.task = res;
-
-  //   return of(this.task);
-  // }
-
   getTasks(): Observable<Task[]>{
     return of(this.tasks);
+  }
+
+  getTasksFromList(idList: number): Observable<Task[]>{
+    return of(this.tasks.filter(t => t.ListId === idList));
   }
 
   addTask(task: Task){
@@ -42,8 +38,6 @@ export class TaskService {
       (
         this.tasks.findIndex(
           e =>
-            e.Content === task.Content
-            &&
             e.Id === task.Id
         )
       , 1);

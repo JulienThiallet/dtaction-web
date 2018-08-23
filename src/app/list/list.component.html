@@ -1,7 +1,7 @@
 <h1>Ma Liste</h1>
 
 <ul>
-  <li *ngFor="let t of tasks" >
+  <li *ngFor="let t of list.Tasks" >
     <app-task [task]="t"></app-task>
     <button (click)="toggleUpdateInput(t)">Modify</button>
     <div [style.display]="styleDisplayUpdate(t)" >

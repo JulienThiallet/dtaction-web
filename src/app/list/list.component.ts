@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+
+import { List } from '../list';
+import { ListService } from '../list.service';
 
 import { Task } from '../task';
-import { TASKS } from '../mock-task';
 import { TaskService } from '../task.service';
 
 @Component({
@@ -11,32 +13,41 @@ import { TaskService } from '../task.service';
 })
 export class ListComponent implements OnInit {
 
-  tasks: Array<Task>;
-  task: Task;
+  list: List;
 
   canBeModified: Array<boolean>;
   canAdd: boolean;
   newContent: Array<string>;
   content: string;
 
-  constructor(private service: TaskService) {
-    this.tasks = TASKS;
+  constructor(private serviceList: ListService, private serviceTask: TaskService) {
+    serviceList.getListsForAUser(parseInt(sessionStorage.getItem('Id'), 10)).subscribe(u => this.list = u);
     this.canBeModified = new Array<boolean>();
     this.newContent = new Array<string>();
     this.canAdd = false;
-    for(let i: number = 0; i < TASKS.length; i++){
+    for(let i: number = 0; i < this.list.Tasks.length; i++){
       this.canBeModified[i] = false;
     }
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 
   removeTask(task: Task){
-    this.service.removeTask(task);
+    this.serviceTask.removeTask(task);
+
+    this.list.Tasks.splice
+      (
+        this.list.Tasks.findIndex(
+          e => {
+            return e.Id === task.Id;
+          }
+       )
+      , 1);
   }
 
   toggleUpdateInput(task: Task){
-    let location : number = TASKS.findIndex(t => t.Id === task.Id);
+    let location : number = this.list.Tasks.findIndex(t => t.Id === task.Id);
     this.canBeModified[location] === false ? this.canBeModified[location] = true : this.canBeModified[location] = false;
   }
 
@@ -45,27 +56,30 @@ export class ListComponent implements OnInit {
   }
 
   updateTask(task: Task){
-    let location : number = TASKS.findIndex(t => t.Id === task.Id);
+    let location : number = this.list.Tasks.findIndex(t => t.Id === task.Id);
 
-    this.service.updateTask(task, this.newContent[task.Id]);
+    this.serviceTask.updateTask(task, this.newContent[task.Id]);
     this.newContent[task.Id] = '';
     this.canBeModified[location] = false;
   }
 
+
   addTask(){
     let task: Task = new Task();
 
-    task.Id = TASKS[TASKS.length-1].Id + 1;
+    this.serviceTask.getTasks().subscribe(tasks => task.Id = tasks[tasks.length-1].Id + 1);
     task.Content = this.content;
+    task.ListId = this.list.Id;
 
     this.content = '';
     this.canAdd = false;
 
-    this.service.addTask(task);
+    this.serviceTask.addTask(task);
+    this.list.Tasks.push(task);
   }
 
   styleDisplayUpdate(task: Task){
-    return this.canBeModified[this.tasks.findIndex(t => task.Id === t.Id)] ? 'block' : 'none';
+    return this.canBeModified[this.list.Tasks.findIndex(t => task.Id === t.Id)] ? 'block' : 'none';
   }
 
   styleDisplayAdd(){

@@ -54,6 +54,7 @@ export class SignUpComponent implements OnInit {
     if(!this.userExist){
       this.userExist = false;
       this.service.addUser(this.user);
+      sessionStorage.setItem("Id", this.user.Id.toString());
       this.user = new User();
       this.router.navigate(['./list']);
     }
