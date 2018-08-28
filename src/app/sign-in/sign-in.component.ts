@@ -24,7 +24,6 @@ export class SignInComponent implements OnInit {
     this.createForm();
     this.user = new User();
     this.isValid = false;
-    this.service.getUsers().subscribe(u => console.log(u));
   }
 
   ngOnInit() {
@@ -38,15 +37,19 @@ export class SignInComponent implements OnInit {
   }
 
   async onSubmit(){
-    await this.serviceList.getListsForAUser(parseInt(sessionStorage.getItem('Id'), 10)).subscribe(u => u[0] != undefined ? this.serviceList.list = u[0] : this.serviceList.list.Title = 'SuperList');
-    await this.service.getUser(this.user.Pseudo, this.user.Psw).subscribe(u => (u != undefined && u.Pseudo != '') ? this.validAndPutUserId(u.Id) : this.isValid = false);
+    await this.service.getUser(this.user.Pseudo, this.user.Psw).subscribe(u => (u != undefined && u.Pseudo != '') ? this.validAndPutUserId(u.Id) : (this.isValid = false, console.log('test')));
   }
 
   validAndPutUserId(id: number){
-    console.log(this.serviceList.list.Title);
     this.user.Id = id;
+    this.getList(id);
     sessionStorage.setItem('Id', this.user.Id.toString());
     this.router.navigate(['/list']);
+  }
+
+  async getList(id: number)
+  {
+    await this.serviceList.getListsForAUser(id).subscribe(u => u[0] != undefined ? (this.serviceList.list = u[0]) : (this.serviceList.list.Title = 'SuperList'));
   }
 
   onClose(){

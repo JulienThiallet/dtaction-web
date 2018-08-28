@@ -22,12 +22,16 @@ export class ListComponent implements OnInit {
   content: string;
 
   constructor(private serviceList: ListService, private serviceTask: TaskService) {
-    this.list = this.serviceList.list;
+    this.list = new List();
     this.tasks = new Array<Task>();
-    this.list.Id != -1 ? this.listExist() : (this.tasks = new Array<Task>(), this.serviceList.addList(this.list), this.serviceList.getLists().subscribe(l => this.list.Id = l[l.length].Id));
+    this.canBeModified = new Array<boolean>();
+    console.log('avant', this.list.Id);
+    this.getList(parseInt(sessionStorage.getItem('Id'), 10));
+    console.log('apres', this.list.Id);
+    this.list.Id != -1 ? this.listExist() : (this.tasks = new Array<Task>(), this.list.UserId = parseInt(sessionStorage.getItem("Id"), 10), this.serviceList.addList(this.list), this.serviceList.getLists().subscribe(l => this.list.Id = l[l.length-1].Id));
     this.newContent = new Array<string>();
     this.canAdd = false;
-
+    console.log("ça marche pas ");
 
   }
 
@@ -35,9 +39,15 @@ export class ListComponent implements OnInit {
 
   }
 
+  async getList(id: number)
+  {
+
+    await this.serviceList.getListsForAUser(id).subscribe(u => u[0] != undefined ? (this.list = u[0]) : (this.list.Title = 'SuperList'));
+  }
+
   listExist() {
+    console.log(this.list.Id);
     this.serviceTask.getTasksFromList(this.list.Id).subscribe(t => this.tasks = t);
-    this.canBeModified = new Array<boolean>(false);
   }
 
   removeTask(task: Task){
