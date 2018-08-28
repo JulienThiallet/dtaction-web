@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { UserService } from '../user.service';
-import { USERS } from '../mock-user';
+
 
 @Component({
   selector: 'app-sign-up',
@@ -29,7 +29,7 @@ export class SignUpComponent implements OnInit {
   ngOnInit() {}
 
   verifPass(){
-    if (this.pass !== this.user.Password)
+    if (this.pass !== this.user.Psw)
     {
       this.flag = true;
     }
@@ -40,10 +40,7 @@ export class SignUpComponent implements OnInit {
   }
 
   isUserAlreadyExist(){
-    let alreadyExist: boolean;
-    this.service.getUserByPseudo(this.user.Pseudo).subscribe(u => (u != undefined && u.Pseudo !='') ? alreadyExist = true : alreadyExist = false);
-
-    alreadyExist ? this.userExist = true : this.userExist = false;
+    this.service.getUserByPseudo(this.user.Pseudo).subscribe(u => (u != undefined && u.Pseudo !='') ? this.userExist = true : this.userExist = false);
   }
 
   displayUserAlreadyExist(){

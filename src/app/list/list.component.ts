@@ -14,6 +14,7 @@ import { TaskService } from '../task.service';
 export class ListComponent implements OnInit {
 
   list: List;
+  tasks: Array<Task>;
 
   canBeModified: Array<boolean>;
   canAdd: boolean;
@@ -21,34 +22,43 @@ export class ListComponent implements OnInit {
   content: string;
 
   constructor(private serviceList: ListService, private serviceTask: TaskService) {
-    serviceList.getListsForAUser(parseInt(sessionStorage.getItem('Id'), 10)).subscribe(u => this.list = u);
-    this.canBeModified = new Array<boolean>();
+    this.list = this.serviceList.list;
+    this.tasks = new Array<Task>();
+    this.list.Id != -1 ? this.listExist() : (this.tasks = new Array<Task>(), this.serviceList.addList(this.list), this.serviceList.getLists().subscribe(l => this.list.Id = l[l.length].Id));
     this.newContent = new Array<string>();
     this.canAdd = false;
-    for(let i: number = 0; i < this.list.Tasks.length; i++){
-      this.canBeModified[i] = false;
-    }
+
+
   }
 
   ngOnInit() {
+
+  }
+
+  listExist() {
+    this.serviceTask.getTasksFromList(this.list.Id).subscribe(t => this.tasks = t);
+    this.canBeModified = new Array<boolean>(false);
   }
 
   removeTask(task: Task){
+    let locationLocal : number = this.tasks.findIndex(t => t.Id === task.Id);
+    let location : number = task.Id;
+    this.serviceTask.getTasksFromList(this.list.Id).subscribe(t => task.Id = t[locationLocal].Id);
     this.serviceTask.removeTask(task);
 
-    this.list.Tasks.splice
+    this.tasks.splice
       (
-        this.list.Tasks.findIndex(
+        this.tasks.findIndex(
           e => {
-            return e.Id === task.Id;
+            return e.Id === location;
           }
        )
       , 1);
   }
 
   toggleUpdateInput(task: Task){
-    let location : number = this.list.Tasks.findIndex(t => t.Id === task.Id);
-    this.canBeModified[location] === false ? this.canBeModified[location] = true : this.canBeModified[location] = false;
+    let location : number = this.tasks.findIndex(t => t.Id === task.Id);
+    this.canBeModified[location] !== true ? this.canBeModified[location] = true : this.canBeModified[location] = false;
   }
 
   toggleAddInput(){
@@ -56,30 +66,32 @@ export class ListComponent implements OnInit {
   }
 
   updateTask(task: Task){
-    let location : number = this.list.Tasks.findIndex(t => t.Id === task.Id);
-
-    this.serviceTask.updateTask(task, this.newContent[task.Id]);
-    this.newContent[task.Id] = '';
-    this.canBeModified[location] = false;
+    let locationLocal : number = this.tasks.findIndex(t => t.Id === task.Id);
+    let location : number = task.Id;
+    task.Content = this.newContent[task.Id];
+    this.serviceTask.getTasksFromList(this.list.Id).subscribe(t => task.Id = t[locationLocal].Id);
+    this.serviceTask.getTasksFromList(this.list.Id).subscribe(t => console.log(t));
+    this.serviceTask.updateTask(task);
+    this.canBeModified[locationLocal] = false;
+    this.newContent[location] = '';
   }
 
 
   addTask(){
     let task: Task = new Task();
 
-    this.serviceTask.getTasks().subscribe(tasks => task.Id = tasks[tasks.length-1].Id + 1);
     task.Content = this.content;
-    task.ListId = this.list.Id;
+    task.IdList = this.list.Id;
 
     this.content = '';
     this.canAdd = false;
-
+    this.list
     this.serviceTask.addTask(task);
-    this.list.Tasks.push(task);
+    this.tasks.push(task);
   }
 
   styleDisplayUpdate(task: Task){
-    return this.canBeModified[this.list.Tasks.findIndex(t => task.Id === t.Id)] ? 'block' : 'none';
+    return this.canBeModified[this.tasks.findIndex(t => task.Id === t.Id)] ? 'block' : 'none';
   }
 
   styleDisplayAdd(){

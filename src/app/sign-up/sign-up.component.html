@@ -6,13 +6,13 @@
     <small *ngIf="Pseudo?.errors.minlength">Username must be at least 6 characters long.</small>
   </div>
   <label>Email</label>
-  <input name="Mail" id="Mail "type="email" [(ngModel)]="user.Mail" ngmodel email="true" required #Mail="ngModel"/>
+  <input name="Mail" id="Mail "type="email" [(ngModel)]="user.Email" ngmodel email="true" required #Mail="ngModel"/>
   <div *ngIf="Mail?.invalid && (Mail?.dirty || Mail?.touched)" class="alert alert-danger">
     <small *ngIf="Mail?.errors.required">Email is required.</small>
     <small *ngIf="Mail?.errors.email">Email not valid.</small>
   </div>
   <label>Password</label>
-  <input name="Password"type="Password" [(ngModel)]="user.Password" (focusin)="verifPass()" required minlength="6" maxlength="20" #Password="ngModel"/>
+  <input name="Password"type="Password" [(ngModel)]="user.Psw" (focusin)="verifPass()" required minlength="6" maxlength="20" #Password="ngModel"/>
   <div *ngIf="Password?.invalid && (Password?.dirty || Password?.touched)" class="alert alert-danger">
     <small *ngIf="Password?.errors.required">Password is required.</small>
     <small *ngIf="Password?.errors.minlength">Password must be at least 6 characters long and can have 20 characters.</small>
