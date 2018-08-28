@@ -92,10 +92,12 @@ export class ListComponent implements OnInit {
 
     task.Content = this.content;
     task.IdList = this.list.Id;
+    task.Position = this.tasks.length;
 
     this.content = '';
     this.canAdd = false;
-    this.list
+    
+  
     this.serviceTask.addTask(task);
     this.tasks.push(task);
   }
