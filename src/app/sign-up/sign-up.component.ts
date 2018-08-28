@@ -48,18 +48,22 @@ export class SignUpComponent implements OnInit {
     return this.userExist ? 'block' : 'none';
   }
 
-  createNewList(id: number){
-    this.serviceList.list.UserId = id;
-    this.serviceList.addList(this.serviceList.list)
-    sessionStorage.setItem("Id", id.toString());
+  async createNewList(){
+    // this.serviceList.list.UserId = id;
+    // this.serviceList.addList(this.serviceList.list);
+    console.log('milieu début', this.user.Id);
+    await this.service.getLastUser().subscribe(u => console.log(u));
+    console.log('milieu fin', this.user.Id);
   }
 
-  async onSubmit(){
+  async addUser(){
+    await this.service.addUser(this.user).subscribe(u => this.service.getLastUser().subscribe(user => sessionStorage.setItem('Id', user.Id.toString())));
+  }
+
+  onSubmit(){
     if(!this.userExist){
       this.serviceList.list.Title = 'SuperList';
-      await this.service.addUser(this.user);
-      await this.service.getUser(this.user.Pseudo, this.user.Psw).subscribe(u => (u != undefined && u.Pseudo != '') ? this.createNewList(u.Id) : '');
-
+      this.addUser();
       this.user = new User();
       this.router.navigate(['./list']);
     }

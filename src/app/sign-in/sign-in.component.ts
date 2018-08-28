@@ -42,7 +42,7 @@ export class SignInComponent implements OnInit {
 
   validAndPutUserId(id: number){
     this.user.Id = id;
-    this.getList(id);
+    //this.getList(id);
     sessionStorage.setItem('Id', this.user.Id.toString());
     this.router.navigate(['/list']);
   }

@@ -26,9 +26,9 @@ export class ListComponent implements OnInit {
     this.tasks = new Array<Task>();
     this.canBeModified = new Array<boolean>();
     console.log('avant', this.list.Id);
-    this.getList(parseInt(sessionStorage.getItem('Id'), 10));
+    this.getList();
     console.log('apres', this.list.Id);
-    this.list.Id != -1 ? this.listExist() : (this.tasks = new Array<Task>(), this.list.UserId = parseInt(sessionStorage.getItem("Id"), 10), this.serviceList.addList(this.list), this.serviceList.getLists().subscribe(l => this.list.Id = l[l.length-1].Id));
+    //this.list.Id != -1 ?  : ;
     this.newContent = new Array<string>();
     this.canAdd = false;
     console.log("ça marche pas ");
@@ -39,14 +39,14 @@ export class ListComponent implements OnInit {
 
   }
 
-  async getList(id: number)
-  {
-
-    await this.serviceList.getListsForAUser(id).subscribe(u => u[0] != undefined ? (this.list = u[0]) : (this.list.Title = 'SuperList'));
+  async getList()
+  { 
+    this.serviceList.getListsForAUser(parseInt(sessionStorage.getItem('Id'), 10)).subscribe(u => console.log(u));
+    await this.serviceList.getListsForAUser(parseInt(sessionStorage.getItem('Id'), 10)).subscribe(u => u[0] != undefined ? this.listExist(u[0]) : ( console.log('avant1'), this.list.Id = -1, this.list.Title = 'SuperList10', this.tasks = new Array<Task>(), console.log(parseInt(sessionStorage.getItem('Id'), 10)), this.list.IdUser = parseInt(sessionStorage.getItem('Id'), 10), console.log(this.list.IdUser), this.serviceList.addList(this.list), this.serviceList.getLists().subscribe(l => this.list.Id = l[l.length-1].Id)));
   }
 
-  listExist() {
-    console.log(this.list.Id);
+  listExist(u: List) {
+    this.list = u; 
     this.serviceTask.getTasksFromList(this.list.Id).subscribe(t => this.tasks = t);
   }
 

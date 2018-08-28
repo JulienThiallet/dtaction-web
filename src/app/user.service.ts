@@ -41,11 +41,22 @@ export class UserService {
     return this.http.get<User[]>('http://dtaction.azurewebsites.net/api/user', httpOptions);
   }
 
-  addUser(user: User){
+  getLastUser(): Observable<User>{
+    // return of(this.users);
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json'})
+    };
+    return this.http.get<User>('http://dtaction.azurewebsites.net/api/getlastuser', httpOptions);
+  }
+
+  addUser(user: User): Observable<User>{
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json'})
     };
     this.http.post<User>('http://dtaction.azurewebsites.net/api/user', user, httpOptions).subscribe();
+
+    return this.getLastUser();
+    
   }
 
 }
