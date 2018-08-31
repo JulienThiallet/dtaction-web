@@ -25,3 +25,32 @@ div#tododiv{
     font-size: 1.5vw;
     font-weight: bold;
 }
+
+.btn-update{
+    border-color: #7d0000;
+    background-color: #7d0000;
+}
+
+.btn-task{
+    border-color: #530000;
+    background-color: #530000;
+}
+
+input {
+    border: red 2px solid;
+    border-radius: 15px;
+    padding-left: 10px;
+    margin: 10px auto;
+    max-width: 300px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.33);
+}
+
+/* .btn-task:focus, .btn-task:hover, .btn-task:active{
+    outline: none;
+    border: none;
+}
+
+.btn-update:focus, .btn-update:hover, .btn-update:active{
+    outline: none;
+    border: none;
+} */

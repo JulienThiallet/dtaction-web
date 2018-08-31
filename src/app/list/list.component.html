@@ -6,19 +6,19 @@
       <table id="todo">
         <tr *ngFor="let t of tasks">
           <td><app-task [task]="t"></app-task></td>
-          <td><button (click)="toggleUpdateInput(t)">Modify</button>
+          <td><button (click)="toggleUpdateInput(t)" class="btn btn-danger btn-update">Modify</button>
             <div [style.display]="styleDisplayUpdate(t)" >
             <input type="text" [(ngModel)]="newContent[t.Id]">
-            <button (click)="updateTask(t)">Update</button>
+            <button (click)="updateTask(t)" class="btn btn-danger btn-update">Update</button>
           </div></td>
-          <td><button (click)="removeTask(t)">Delete</button></td>
+          <td><button (click)="removeTask(t)" class="btn btn-danger">Delete</button></td>
         </tr>
       </table>
     </div>
-    <button (click)="toggleAddInput()">+ Add a Task</button>
+    <button (click)="toggleAddInput()" class="btn btn-danger btn-task">+ Add a Task</button>
     <div [style.display]="styleDisplayAdd()">
       <input type="text" [(ngModel)]="content">
-      <button id="addtask" (click)="addTask()">Ajouter</button>
+      <button id="addtask" (click)="addTask()" class="btn btn-danger btn-task">Ajouter</button>
     </div>
   </div>
 </div>
