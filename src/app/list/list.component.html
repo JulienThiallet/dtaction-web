@@ -1,18 +1,29 @@
-<h1>{{list.Title}}</h1>
+<div *ngIf="isConnected;else not_connected">
 
-<ul>
-  <li *ngFor="let t of tasks" >
-    <app-task [task]="t"></app-task>
-    <button (click)="toggleUpdateInput(t)">Modify</button>
-    <div [style.display]="styleDisplayUpdate(t)" >
-      <input type="text" [(ngModel)]="newContent[t.Id]">
-      <button (click)="updateTask(t)">Update</button>
+  <div id="tododiv">
+    <h1>{{list.Title}}</h1>
+    <div id="tasks">
+      <table id="todo">
+        <tr *ngFor="let t of tasks">
+          <td><app-task [task]="t"></app-task></td>
+          <td><button (click)="toggleUpdateInput(t)">Modify</button>
+            <div [style.display]="styleDisplayUpdate(t)" >
+            <input type="text" [(ngModel)]="newContent[t.Id]">
+            <button (click)="updateTask(t)">Update</button>
+          </div></td>
+          <td><button (click)="removeTask(t)">Delete</button></td>
+        </tr>
+      </table>
     </div>
-    <button (click)="removeTask(t)">Delete</button>
-  </li>
-</ul>
-<button (click)="toggleAddInput()">Add a Task</button>
-<div [style.display]="styleDisplayAdd()">
-  <input type="text" [(ngModel)]="content">
-  <button (click)="addTask()">Ajouter</button>
+    <button (click)="toggleAddInput()">+ Add a Task</button>
+    <div [style.display]="styleDisplayAdd()">
+      <input type="text" [(ngModel)]="content">
+      <button id="addtask" (click)="addTask()">Ajouter</button>
+    </div>
+  </div>
 </div>
+<ng-template #not_connected >
+  <div >
+    <h2 id="notConnected">Vous n'êtes pas connecté</h2>
+  </div>
+</ng-template>

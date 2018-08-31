@@ -1,4 +1,4 @@
- /* The Modal (background) */
+/* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -9,7 +9,7 @@
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
     padding-top: 60px;
 }
 
@@ -27,9 +27,11 @@
     position: absolute;
     right: 25px;
     top: 0;
-    color: #000;
+    color: red;
     font-size: 35px;
     font-weight: bold;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
+    z-index: 10;
 }
 
 /* Close button on hover */
@@ -53,4 +55,24 @@
 @keyframes animatezoom {
     from {transform: scale(0)}
     to {transform: scale(1)}
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+button{
+    align-self: center;
+    background-color: #990000;
+    border-color: #990000;
+    margin: 0 15px;
+    min-width: 100px;
+    transition: 0.4s all;
+}
+
+button:hover{
+    background-color: red;
+    border-color: red;
 }

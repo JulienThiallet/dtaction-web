@@ -20,18 +20,27 @@ export class ListComponent implements OnInit {
   canAdd: boolean;
   newContent: Array<string>;
   content: string;
+  isConnected: boolean;
 
   constructor(private serviceList: ListService, private serviceTask: TaskService) {
     this.list = new List();
     this.tasks = new Array<Task>();
     this.canBeModified = new Array<boolean>();
-    console.log('avant', this.list.Id);
+    console.log(sessionStorage.getItem('Id'));
+    
+    if(sessionStorage.getItem('Id') == '' || sessionStorage.getItem('Id') == null){
+      this.isConnected = false;
+    }
+    else{
+      this.isConnected = true;
+    }
+    if(this.isConnected){
     this.getList();
-    console.log('apres', this.list.Id);
-    //this.list.Id != -1 ?  : ;
+    
+    
     this.newContent = new Array<string>();
     this.canAdd = false;
-    console.log("ça marche pas ");
+    } 
 
   }
 
@@ -109,6 +118,14 @@ export class ListComponent implements OnInit {
   styleDisplayAdd(){
     return this.canAdd ? 'block' : 'none';
 
+  }
+
+  styleUserConnected(){
+    return this.isConnected ? 'block' : 'none';
+  }
+
+  styleUserNotConnected(){
+    return this.isConnected ? 'none' : 'block';
   }
 
 }

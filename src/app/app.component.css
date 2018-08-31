@@ -1,0 +1,31 @@
+#logo {
+    margin: 10px auto;
+    width: auto;
+    height: 50%;
+}
+
+#header {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    overflow: auto;
+    overflow-wrap: break-word;
+}
+
+h2{
+    text-align: center;
+    margin: 0 auto;
+    padding: 0;
+    font-size: 1.5vw;
+    font-weight: bold;
+}
+
+#deco{
+    margin: 20px 20px 0 0;
+}
+
+@media screen and (max-width: 900px) {
+    h2 {
+      font-size: 15px;
+    }
+}

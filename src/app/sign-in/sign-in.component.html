@@ -9,15 +9,14 @@
 
     <label for="psw"><b>Password</b></label>
     <input formControlName="password" type="password" [(ngModel)]="user.Psw" placeholder="Enter Password" name="password" required>
-
-    <button type="submit" (click)="onSubmit()"  (keyup.enter)="onSubmit()">Login</button>
-    <label>
-      <!-- <input type="checkbox" checked="checked" name="remember"> Remember me -->
-    </label>
+    <div id="buttons">
+      <button type="submit" (click)="onSubmit()"  (keyup.enter)="onSubmit()">Login</button>
+      <button type="submit" class="cancelbtn" (click)="onClose()">Cancel</button>
+    </div>
   </div>
-
+<!-- 
   <div class="container" style="background-color:#f1f1f1">
     <button type="submit" class="cancelbtn" (click)="onClose()">Cancel</button>
-    <!--<span class="psw">Forgot <a href="#">password?</a></span> -->
-  </div>
+    <span class="psw">Forgot <a href="#">password?</a></span>
+  </div> -->
 </form>
